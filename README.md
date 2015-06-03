@@ -1,3 +1,3 @@
 # polynomial
-Polynomial tools for abstract algebra
+Polynomial tools for abstract algebra /n
 Author: Liam Tengelis
