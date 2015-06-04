@@ -9,29 +9,18 @@ __date__ = "$Jun 3, 2015 11:20:42 AM$"
 
 from polynom import *
 
-x= Polynomial(2, [0, 0, 1, 0, 0, 0, 10])
+a= [0]*(8)
+index= 0
+for i in range(0,2):
+    for j in range(0,2):
+        for k in range(0,2):
+            a[index]= Polynomial(2, [i, j, k])
+            print str(a[index]) + " from " + str([i, j, k])
+            index+= 1
+            
 
-print str(x)+ " in its orig state has deg "+ str(x.deg())
-
-x._reduce()
-
-print str(x)+ " been reduced has deg "+ str(x.deg())
-
-x._trim()
-
-print str(x) +" been trimmmed has deg "+ str(x.deg())
-
-y= Polynomial(2, [0])
-
-print y
-
-z= Polynomial(2, [0, 1])
-
-print "z: "+ str(z)
-
-w= z.times(x)
-
-print "w: "+ str(w) + " has deg "+ str(w.deg())
+for poly in a:
+    print str(poly) + " times " + str(a[6]) + " equals " + str(poly.times(a[6]))
 
 if __name__ == "__main__":
-    print "Hello World";
+    print "Some manual tests";

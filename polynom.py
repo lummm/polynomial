@@ -34,7 +34,7 @@ class Polynomial:
     """
         trim
     Trims trailing 0's.
-    Only useful after __reduce is run
+    Only useful after _reduce is run
     """
     def _trim(self):
         if(len(self.coefs) > 1):
@@ -42,7 +42,9 @@ class Polynomial:
             while (self.coefs[last_non_zero] == 0) and (last_non_zero+ len(self.coefs)> 0):
                 last_non_zero = last_non_zero-1
             
+            
             if (last_non_zero < -1):
+                # trim up to and including last_non_zero
                 self.coefs = self.coefs[:last_non_zero + 1]    
     
     """
@@ -57,34 +59,42 @@ class Polynomial:
     String output
     """
     def __str__(self):
-        if self.deg() == 0:
-            return str(0)
+        if len(self.coefs) == 1:
+            return str(self.coefs[0])
         s=""
         for i in range(0, len(self.coefs)):
-            s=""
-            s= self.term_formatter(self.coefs[i], i)+ "+ "+ s
+            s= self.term_formatter(self.coefs[i], i)+ s
         return s[:-2]
         
     """
     Formats terms for the __str__ method
     """
     def term_formatter(self, coefficient, power):
-        if coefficient == 0:
-            return ""
+
+        # to avoid formatting as x^1
         if power == 1:
             if coefficient == 1:
-                return "x"
-            # coefficient==0 case already covered
+                return "x+ "
+            if coefficient == 0:
+                return ""
             else:
-                return str(coefficient)+ "x"
+                return str(coefficient)+ "x+ "
+            
+        # this case has no x at all
         if power == 0:
-            return str(coefficient)
-        # power is > 2, and coefficient is nonzero
+            if coefficient == 0:
+                return ""
+            else :
+                return str(coefficient)+ "+ "
+        
+        # else power is > 2
         else:
-            if coefficient ==1:
-                return "x^"+ str(power)
+            if coefficient == 0:
+                return ""
+            if coefficient == 1:
+                return "x^"+ str(power)+ "+ "
             else:
-                return str(coefficient) + "x^"+ str(power)
+                return str(coefficient) + "x^"+ str(power)+ "+ "
     
     def times(self, multiplicand):
         if(self.modulus != multiplicand.modulus):
