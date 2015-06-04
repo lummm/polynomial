@@ -114,7 +114,40 @@ class Polynomial:
             return product
 
 
-
+    def __eq__(self, other):
+        if isinstance(other, Polynomial):
+            if self.modulus != other.modulus:
+                return False
+            if self.deg() != other.deg():
+                return False
+            # lengths are equal, test each coefficient
+            for i in range(0, len(self.coefs)):
+                if self.coefs[i] != other.coefs[i]:
+                    return False
+                
+            return True
+        return False
+        
+    """
+    Reduces a given polynomial modulo the original
+    """
+    def reduced_mod_me(self, other):
+        if not isinstance(other, Polynomial):
+            return None
+        if other.deg()< self.deg():
+            return other
+        
+        factor= other.deg() - self.deg()
+        cofs= [0]*(other.deg()+1)
+        for i in range(0, other.deg()+1):
+            if (i >= factor):
+                cofs[i] = other.coefs[i] - (other.coefs[other.deg()] * self.coefs[i - factor])
+            else :
+                cofs[i] = other.coefs[i]
+                
+        return Polynomial(self.modulus, cofs)
+        
+        
 
 
 

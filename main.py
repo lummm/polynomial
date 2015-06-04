@@ -20,7 +20,10 @@ for i in range(0,2):
             
 
 for poly in a:
-    print str(poly) + " times " + str(a[6]) + " equals " + str(poly.times(a[6]))
+    print str(poly) + " equals " + str(a[6]) + "?" + str(poly == a[6])
+    
+for poly in a:
+    print str(poly) + " reduced mod " + str(a[6]) + " is " + str(a[6].reduced_mod_me(poly))
 
 if __name__ == "__main__":
     print "Some manual tests";
