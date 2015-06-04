@@ -96,22 +96,30 @@ class Polynomial:
             else:
                 return str(coefficient) + "x^"+ str(power)+ "+ "
     
-    def times(self, multiplicand):
-        if(self.modulus != multiplicand.modulus):
-            print "Moduli of the products must match!"
-            return false
-        else: 
-            # initialize the new coefficient list with zeroes
-            # --> degree is the sum of the degrees of multiplicands (hence 
-            # length is one greater)
-            new_coefs= [0] * (self.deg()+ multiplicand.deg()+ 1)
-            for i in range(0, len(self.coefs)):
-                for j in range(0, len(multiplicand.coefs)):
-                    new_coefs[i + j] += (self.coefs[i] * multiplicand.coefs[j])
-            product = Polynomial(self.modulus, new_coefs)
-            product._reduce()
-            product._trim()
-            return product
+    def __mul__(self, multiplicand):
+        
+        if(isinstance(multiplicand, int)):
+            new_coefs= [0] * (self.deg() + 1)
+            for i in range(0, self.deg()+1):
+                new_coefs[i] = self.coefs[i] * multiplicand
+            return Polynomial(self.modulus, new_coefs)
+        
+        if (isinstance(multiplicand, Polynomial)):
+            if(self.modulus != multiplicand.modulus):
+                print "Moduli of the products must match!"
+                return None
+            else: 
+                # initialize the new coefficient list with zeroes
+                # --> degree is the sum of the degrees of multiplicands (hence 
+                # length is one greater)
+                new_coefs= [0] * (self.deg()+ multiplicand.deg()+ 1)
+                for i in range(0, len(self.coefs)):
+                    for j in range(0, len(multiplicand.coefs)):
+                        new_coefs[i + j] += (self.coefs[i] * multiplicand.coefs[j])
+                return Polynomial(self.modulus, new_coefs)
+            
+        return None
+                
 
 
     def __eq__(self, other):
