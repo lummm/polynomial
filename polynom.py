@@ -2,6 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+
+
 __author__ = "liam"
 __date__ = "$Jun 3, 2015 10:43:07 AM$"
 
@@ -139,7 +141,7 @@ class Polynomial:
     """
     Reduces a given polynomial modulo the original
     """
-    def reduced_mod_me(self, other):
+    def __mod__(self, other):
         if not isinstance(other, Polynomial):
             return None
         if other.deg()< self.deg():
@@ -155,14 +157,41 @@ class Polynomial:
                 
         return Polynomial(self.modulus, cofs)
         
+    
+        
+        
+
+    def __sub__(self, other):
+        if not isinstance(other, Polynomial):
+            return None
+        if self.modulus != other.modulus:
+            return None
+        
+        if len(self.coefs) < len(other.coefs):
+            return minus_greater_known(self, other, self, other)
+        else:
+            return minus_greater_known(self, other, other, self)
         
 
 
+    
+def minus_greater_known(self, other, smaller, greater):
+    # initialize new_coefs to have the length of the greater polynomial
+    new_coefs= [0]*len(greater.coefs)
+    # this is the same regardless of whether self is smaller than other or not
+    for i in range(0, len(smaller.coefs)):
+        new_coefs[i]= self.coefs[i] - other.coefs[i]
+    
+    # self is smaller case, remaining entries are negative
+    if smaller == self:
+        for i in range(len(smaller.coefs), len(greater.coefs)):
+            new_coefs[i]= 0 - other.coefs[i]
+    # self is greater case, remaining entries are positive
+    else:
+        for i in range(len(smaller.coefs), len(greater.coefs)):
+            new_coefs[i]= self.coefs[i]
 
-
-
-
-
+    return Polynomial(self.modulus, new_coefs)
 
 
 

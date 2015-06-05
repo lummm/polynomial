@@ -20,7 +20,7 @@ for i in range(0,2):
             
 
 for poly in a:
-    print str(poly) + " times " + str(a[6]) + " = " + str(poly * a[6])
+    print str(poly) + " modulo " + str(a[6]) + " = " + str(poly % a[6])
     
 
 
