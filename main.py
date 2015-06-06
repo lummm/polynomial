@@ -15,13 +15,21 @@ for i in range(0,2):
     for j in range(0,2):
         for k in range(0,2):
             a[index]= Polynomial(2, [i, j, k])
-            print str(a[index]) + " from " + str([i, j, k])
             index+= 1
             
+            
+
+
 
 for poly in a:
-    print str(poly) + " modulo " + str(a[6]) + " = " + str(poly % a[6])
-    
+    print "testing " + str(poly)
+    print str(poly) + " has order " + str(poly.order())
+    if poly.is_primitive():
+        print "PRIM"
+
+
+
+
 
 
 if __name__ == "__main__":
