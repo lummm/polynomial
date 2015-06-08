@@ -27,8 +27,12 @@ for poly in a:
     if poly.is_primitive():
         print "PRIM"
 
-
-
+print "\nTesting polynomial subtraction"
+a = Polynomial(4, [2,3,-1,5,7]) # Implicit test of reduce
+b = Polynomial(4, [1,0,3,2])
+print "A = ", a
+print "B = ", b
+print "A - B = ", a-b
 
 
 
